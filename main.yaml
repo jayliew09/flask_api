@@ -8,10 +8,22 @@ on:
     branches:
       - main
 
-jobs:
-  build:
-    runs-on: ubuntu-20.04
+job runs-on:         
+ permissions:
+ actions: read
+ contents: read
+ security-events: write
 
+    - name: Analyze with CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python
+          
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+         category: "/language:${{matrix.language}}"
+         
     steps:
       - uses: actions/checkout@v4
 
